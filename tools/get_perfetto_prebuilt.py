@@ -62,8 +62,9 @@ def get_perfetto_prebuilt(tool_name, soft_fail=False, arch=None):
   # cached version.
   def download_or_get_cached(file_name, url, sha256):
     import os, hashlib, subprocess
-    dir = os.path.join(
-        os.path.expanduser('~'), '.local', 'share', 'perfetto', 'prebuilts')
+    default_dir = os.path.join('~', '.local', 'share', 'perfetto', 'prebuilts')
+    dir = os.path.expanduser(
+      os.environ.get('PERFETTO_TRACE_PROCESSOR_INSTALL_PATH', default_dir))
     os.makedirs(dir, exist_ok=True)
     bin_path = os.path.join(dir, file_name)
     sha256_path = os.path.join(dir, file_name + '.sha256')
